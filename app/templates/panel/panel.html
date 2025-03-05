@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+       - panel     
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+
+<div class="left">
+    <h2>
+        {{ render_link('chapter.chapter_', chapter.title, id=chapter.id, class='story-link') }}
+    </h2>
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>  
+    <div>
+        <ul class="nav">
+            {{render_nav_item('chapter.text', 'text', id=chapter.id)}}
+            {{render_nav_item('panel.index', 'panels', id=chapter.id)}}
+        </ul>
+    </div>
+    
+    <div id="panels">
+        Panels
+        <ul>
+            {% for panel in panels %}
+                <li>
+                    {{ render_link('panel.panel_', panel.title, id=panel.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div>
+    
+    <h2 >
+        {{ panel.title }}
+        
+    </h2>
+    <div id="del-upd">
+        <button class="btn btn-secondary" id="delete" onclick="deleteChapter({{panel.id}}, {{chapter.id}})">delete</button>
+        <button class="btn btn-secondary" id="update">update</button>
+
+    </div>
+    
+    
+    <div id="div_">
+        <ul class="nav">
+            {{render_nav_item('division.index', 'divisions', id=panel.id)}}
+        </ul>
+    </div>
+    <div class="light" id="light_p">
+        <a href="javascript:void(0)" onclick="document.getElementById('light_p').style.display='none';document.getElementById('faded_p').style.display='none';" class="story-link close">&times;</a>
+        {{ render_form(uForm, button_style='secondary') }}
+        {{ render_form(form, button_style='secondary') }}
+     
+    </div>
+    <div class="faded" id="faded_p"  onclick="document.getElementById('light_p').style.display='none';document.getElementById('faded_p').style.display='none';">
+    </div>
+    <div id="d2">
+        <div id="description_">
+            <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+        {{ panel.description}}
+        </div>
+    </div>
+    
+</div>
+
+
+    
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_p.js') }} ">
+    </script>
+{% endblock %}

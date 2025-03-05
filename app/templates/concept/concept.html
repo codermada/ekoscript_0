@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - concept
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="concepts">
+        Concepts
+        <ul>
+            {% for concept in concepts %}
+                <li>
+                    {{ render_link('concept.concept_', concept.name, id=concept.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="concept-container">
+    <div>
+        <h2 >
+            {{ concept.name }}
+            
+        </h2>
+
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteConcept({{concept.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+    
+        </div> 
+        
+        
+        <div class="light" id="light_cp">
+            <a href="javascript:void(0)" onclick="document.getElementById('light_cp').style.display='none';document.getElementById('faded_cp').style.display='none';" class="story-link close">&times;</a>
+            <div id="f">
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+            </div>
+        </div>
+        <div class="faded" id="faded_cp"  onclick="document.getElementById('light_cp').style.display='none';document.getElementById('faded_cp').style.display='none';">
+        </div>
+        <div id="d2">
+            <div id="title_">
+                
+                
+            </div>
+            
+    
+        
+            <div id="description_">
+                
+                
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                
+                
+
+                
+                {{ concept.description}}
+            </div>
+        </div>
+    </div>
+    
+
+    
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_cp.js') }} ">
+    </script>
+{% endblock %}

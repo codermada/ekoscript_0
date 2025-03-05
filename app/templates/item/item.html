@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - item
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="items">
+        Items
+        <ul>
+            {% for item in items %}
+                <li>
+                    {{ render_link('item.item_', item.name, id=item.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="item-container">
+    <div>
+        <h2 >
+        {{ item.name }}
+            
+        </h2>
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteItem({{item.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+
+        </div>  
+        <div>
+            {% if entered_supitems %}
+            Sup : 
+            {% for supitem in item.supitems.all() %}
+                {{ render_link('supitem.supitem_', supitem.name, id=supitem.id, class='story-link') }}
+            {% endfor %}  
+            <br>
+            {% endif %}
+        </div>
+        <div class="light" id="light_i" >
+            <a href="javascript:void(0)" onclick="document.getElementById('light_i').style.display='none';document.getElementById('faded_i').style.display='none';" class="story-link close">&times;</a>
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+        </div>
+        <div class="faded" id="faded_i" onclick="document.getElementById('light_i').style.display='none';document.getElementById('faded_i').style.display='none';" >
+
+        </div>
+        <div id="d2">
+            <div id="title_">
+                
+                
+            </div>
+            
+
+        
+            <div id="description_">
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                {{ item.description}}
+            </div>
+        </div>
+    </div>
+    
+    <div id="item-supitems">
+        {{ render_link('supitem.index', 'supitems', id=story.id, class='story-link') }}
+        <div>
+            <ul>
+                {% for supitem in supitems %}
+                    <li>
+                        {{ render_link('supitem.supitem_', supitem.name, id=supitem.id, class='story-link') }} <br>
+                        {% if supitem in item.supitems.all() %}
+                            <button onclick="exclude({{item.id}}, {{supitem.id}})" class="btn btn-secondary">exclude</button> 
+                        {% else %}
+                            <button onclick="include({{item.id}}, {{supitem.id}})" class="btn btn-secondary">include</button>
+                        {% endif %}
+                        
+                         
+                    </li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_i.js') }} ">
+    </script>
+{% endblock %}

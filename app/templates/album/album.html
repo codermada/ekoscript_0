@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+       - album     
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    <div id="albums">
+        Albums
+        <ul>
+            {% for album in albums %}
+                <li>
+                    {{ render_link('album.album_', album.title, id=album.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+<div>
+    <h2 >
+        {{ album.title }}
+        
+    </h2>
+    <div id="del-upd">
+        <button class="btn btn-secondary" id="delete" onclick="deleteAlbum({{album.id}}, {{story.id}})">delete</button>
+        <button class="btn btn-secondary" id="update">update</button>
+
+    </div>
+    <ul class="nav">
+        {{ render_nav_item('photo.index', 'photos', id=album.id) }}
+    </ul>
+    <div class="light" id="light_album">
+        <a href="javascript:void(0)" onclick="document.getElementById('light_album').style.display='none';document.getElementById('faded_album').style.display='none';" class="story-link close">&times;</a>
+        {{ render_form(uForm, button_style='secondary') }}
+        {{ render_form(form, button_style='secondary') }}
+     
+    </div>
+    <div class="faded" id="faded_album"  onclick="document.getElementById('light_album').style.display='none';document.getElementById('faded_album').style.display='none';">
+    </div>
+    <div id="d2">
+   
+       
+    
+        <div id="description_">
+            <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+        {{ album.description}}
+        </div>
+    </div>
+</div>
+
+   
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_al.js') }} ">
+    </script>
+{% endblock %}

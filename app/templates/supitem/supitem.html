@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - supitem
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="supitems">
+        Supitems
+        <ul>
+            {% for supitem in supitems %}
+                <li>
+                    {{ render_link('supitem.supitem_', supitem.name, id=supitem.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="supitem-container">
+
+    <div>
+        <h2 >
+            {{ supitem.name }}
+            
+        </h2>
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteSupitem({{supitem.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+    
+        </div>
+        <div>
+            {{ render_link('item.index', 'items', id=story.id, class='story-link') }}
+        </div>
+        {% if n_items > 0 %}
+        <div>
+            Includes:
+            {% for item in supitem.items.all() %}
+            
+                {{ render_link('item.item_', item.name, id=item.id, class='story-link') }}
+            {% endfor %}  
+        <br>
+        </div>
+        {% endif %}
+        
+        <div class="light" id="light_si">
+            <a href="javascript:void(0)" onclick="document.getElementById('light_si').style.display='none';document.getElementById('faded_si').style.display='none';" class="story-link close">&times;</a>
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+         
+        </div>
+        <div class="faded" id="faded_si"  onclick="document.getElementById('light_si').style.display='none';document.getElementById('faded_si').style.display='none';">
+        </div>
+        <div id="d2">
+            
+            <div id="description_">   
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                {{ supitem.description}}   
+            </div>
+        </div>
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_si.js') }} ">
+    </script>
+{% endblock %}

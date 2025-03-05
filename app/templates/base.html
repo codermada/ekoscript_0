@@ -1,0 +1,67 @@
+{% from 'bootstrap5/form.html' import render_form   %}
+{% from 'bootstrap5/pagination.html' import render_pagination  %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'macros/_link.html' import render_link   %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekoscriptor
+        {% block title %}
+            
+        {% endblock %}
+        
+    </title>
+    {{ bootstrap.load_css() }}
+    {% if current_user.is_authenticated %}
+        {% block style %}
+            
+        {% endblock %}
+    {% else %}
+        <link rel="stylesheet" href=" {{ url_for('static', filename='css/styles.css') }} ">
+    {% endif %}
+</head>
+<body>
+    <div class="container">
+        {% if current_user.is_authenticated %}
+            <ul class="nav" id="main_nav">
+                <li><img src=" {{ url_for('static', filename='images/logo.png' ) }} " id="logo"></li>
+                {{ render_nav_item('main.index', 'stories') }}
+                <li> <h4>&nbsp;Hello, {{current_user.username}} &nbsp;</h4> </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='block';document.getElementById('faded').style.display='block';" class="story-link">account</a>
+                    <div class="light" id="light">
+                        <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';document.getElementById('faded').style.display='none';" class="story-link close">&times;</a>
+                        {{ render_nav_item('settings.index', 'settings', id=current_user.id) }}
+                        {{render_nav_item('auth.logout', 'log out')}}
+                    </div>
+                    <div class="faded" id="faded" onclick="document.getElementById('light').style.display='none';document.getElementById('faded').style.display='none';" >
+                        
+                    </div>
+                    
+                </li>   
+            </ul>     
+        {% endif %}
+                    
+        
+
+        {% block nav %}
+            
+        {% endblock %}
+        
+        <div id="content">
+            {% block content %}
+            
+            {% endblock %}   
+        </div>
+        
+    </div>
+    {% block script %}
+    {{ bootstrap.load_js() }}
+    {% endblock %}  
+</body>
+</html>

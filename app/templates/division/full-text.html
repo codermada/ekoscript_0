@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - text     
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+<div class="left">
+    <h2>
+        {{ render_link('chapter.chapter_', chapter.title, id=chapter.id, class='story-link') }}
+    </h2>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('chapter.text', 'text', id=chapter.id)}}
+            {{render_nav_item('panel.index', 'panels', id=chapter.id)}}
+        </ul>
+    </div>
+
+    <h3>
+        {{ render_link('panel.panel_', panel.title, id=panel.id, class='story-link') }}
+        
+    </h3>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('division.index', 'divisions', id=panel.id)}}
+        </ul>
+    </div>
+    
+    
+    <h4>
+        {{render_link('division.division_', division.title, id=division.id, class='story-link')}} 
+    </h4>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('division.text', 'text', id=division.id)}}
+        </ul>
+    </div>
+</div>
+
+<div>
+    <a href=" {{ url_for('division.download_full_text', id=division.id, serial=serial) }} " target="_blank" class="story-link">download full text</a>
+    <div class="full_lines">
+        
+        <table>
+            {% for text in texts %}
+            <tr>
+                <td>{{text.text}}
+                </td>
+                <td>
+                    <button onclick="erase({{text.id}}, {{division.id}}) " class="btn btn-secondary">erase</button>
+                    <button onclick="update({{text.id}}, {{division.id}})" class="btn btn-secondary">update</button>    
+                </td>
+            </tr>
+            {% endfor %} 
+        </table>
+        
+    </div>
+</div>    
+
+{% endblock %}
+{% block script %}
+<script src=" {{ url_for('static' ,filename='js/script_td.js') }} "></script>
+{% endblock %}

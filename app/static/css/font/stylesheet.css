@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Navycula Font';
+    src: url('NavyculaFont-Bold.eot');
+    src: local('Navycula Font Bold'), local('NavyculaFont-Bold'),
+        url('NavyculaFont-Bold.eot?#iefix') format('embedded-opentype'),
+        url('NavyculaFont-Bold.woff2') format('woff2'),
+        url('NavyculaFont-Bold.woff') format('woff'),
+        url('NavyculaFont-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+

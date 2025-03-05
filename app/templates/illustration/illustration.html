@@ -1,0 +1,46 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - illustration   
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1>
+        {{ render_link('character.character_', character.name, id=character.id, class='story-link') }} 
+    </h1>
+    <ul class="nav">
+        {{ render_nav_item('illustration.index', 'illustrations', id=character.id) }}
+    </ul>
+    
+</div>
+<div class="illustration-container">
+        
+    <div>
+        {{ illustr.description }} 
+        
+        <button onclick="update({{illustr.id}});"  class="btn btn-secondary" >update</button> 
+        
+    </div>
+    <div>
+        <img src=" {{ url_for('static', filename=filename ) }} " alt="" class="illustration">
+    </div>
+    <button class="btn btn-secondary" onclick="delete_illustration({{illustr.id}}, {{character.id}});">delete</button>
+</div>    
+
+{% endblock %}
+{% block script %}
+{{ super() }}
+<script src=" {{ url_for('static', filename='js/script_il.js') }} ">
+</script>
+{% endblock %}

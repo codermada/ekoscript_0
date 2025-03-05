@@ -1,0 +1,48 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - settings
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+{% block content %}
+<form action=" {{ url_for('settings.index', id=current_user.id ) }} " method="post">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_theme').style.display='block';document.getElementById('faded_theme').style.display='block';" class="story-link">Theme</a>
+    <div class="light theme" id="light_theme">
+        <a href="javascript:void(0)" onclick="document.getElementById('light_theme').style.display='none';document.getElementById('faded_theme').style.display='none';" class="story-link close">&times;</a>
+        <div>
+            Theme : 
+            {% if current_user.theme == 'css/styles.css' %}
+                <span id="choosen_thm" class="thm">Default</span> 
+            {% elif current_user.theme == 'css/light.css' %}
+                <span id="choosen_thm" class="thm">Light</span> 
+            {% elif current_user.theme == 'css/dark.css' %}
+                <span id="choosen_thm" class="thm">Dark</span> 
+            {% endif %}
+        </div>
+        <ul>
+            <li><input type="radio" name="theme"  value="css/styles.css" class="t"><label for="theme" id="styles_thm" class="thm">Default</label></li>
+            <li><input type="radio" name="theme"  value="css/light.css" class="t"><label for="theme" id="light_thm" class="thm">Light</label></li>
+            <li><input type="radio" name="theme"  value="css/dark.css" class="t"><label for="theme" id="dark_thm" class="thm">Dark</label></li>
+        </ul>
+        <input type="submit" value="change" class="btn btn-secondary" >
+    </div>
+    <div class="faded theme" id="faded_theme" onclick="document.getElementById('light_theme').style.display='none';document.getElementById('faded_theme').style.display='none';" >
+        
+    </div>
+    
+    
+
+    
+</form>
+{% endblock %}
+{% block script %}
+    <script src=" {{ url_for('static' ,filename='js/script_stg.js') }} "></script>
+{% endblock %}

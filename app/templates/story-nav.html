@@ -1,0 +1,35 @@
+<h1>
+    {{render_link('main.story', story.title, id=story.id, class='story-link')}}
+</h1>
+<ul class="nav">
+    {{ render_nav_item('character.index', 'characters', id=story.id) }}
+    {{ render_nav_item('chapter.index', 'chapters', id=story.id) }}
+    {{ render_nav_item('album.index', 'albums', id=story.id) }}
+</ul>
+<div >
+    <a href="javascript:void(0)" onclick="document.getElementById('light_nav').style.display='block';document.getElementById('faded_nav').style.display='block';" id="more_options" class="nav story-link">more options</a>
+</div>
+
+<div class="light" id="light_nav">
+    
+    <a href="javascript:void(0)" onclick="document.getElementById('light_nav').style.display='none';document.getElementById('faded_nav').style.display='none';" class="story-link close">&times;</a>
+    
+    <ul class="nav">
+        {{ render_nav_item('concept.index', 'concepts', id=story.id) }}
+        {{ render_nav_item('group.index', 'groups', id=story.id) }}
+        {{ render_nav_item('item.index', 'items', id=story.id) }}
+    </ul>
+    <ul class="nav">
+        {{ render_nav_item('supcharacter.index', 'supcharacters', id=story.id) }}
+        {{ render_nav_item('supgroup.index', 'supgroups', id=story.id) }}
+        {{ render_nav_item('supitem.index', 'supitems', id=story.id) }}
+    </ul>
+</div>
+<div class="faded" id="faded_nav" onclick="document.getElementById('light_nav').style.display='none';document.getElementById('faded_nav').style.display='none';" class="story-link close">
+    
+</div>
+
+
+
+
+

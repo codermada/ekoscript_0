@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - division    
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+<div class="left">
+    <h2>
+        {{ render_link('chapter.chapter_', chapter.title, id=chapter.id, class='story-link') }}
+    </h2>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('chapter.text', 'text', id=chapter.id)}}
+            {{render_nav_item('panel.index', 'panels', id=chapter.id)}}
+        </ul>
+    </div>
+    <h3>
+        {{ render_link('panel.panel_', panel.title, id=panel.id, class='story-link') }}
+    </h3>
+    <div id="div_">
+        <ul class="nav">
+            {{render_nav_item('division.index', 'divisions', id=panel.id)}}
+        </ul>
+    </div>
+    <div>
+	    <div>
+            {{ render_messages(get_flashed_messages(with_categories=True)) }}
+        </div>
+        <a href="javascript:void(0)" onclick="document.getElementById('light_d').style.display='block';document.getElementById('faded_d').style.display='block';" class="story-link">create a division</a>
+    </div>  
+    <div class="light" id="light_d">
+        <a href="javascript:void(0)" onclick="document.getElementById('light_d').style.display='none';document.getElementById('faded_d').style.display='none';" class="story-link close">&times;</a>
+        <h2>Create a division</h2>    
+        <div>{{ render_form(form, button_style='secondary') }}</div>
+    </div>
+    <div class="faded" id="faded_d" onclick="document.getElementById('light_d').style.display='none';document.getElementById('faded_d').style.display='none';" class="story-link close">
+        
+    </div>
+</div>
+    
+<div>
+    <div>
+        Divisions
+        <ul>
+            {% for division in divisions %}
+                <li>
+                    {{ render_link('division.division_', division.title, id=division.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

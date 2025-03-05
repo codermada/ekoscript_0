@@ -1,0 +1,46 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - photo   
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1>
+        {{ render_link('album.album_', album.title, id=album.id, class='story-link') }} 
+    </h1>
+    <ul class="nav">
+        {{ render_nav_item('photo.index', 'photos', id=album.id) }}
+    </ul>
+    
+</div>
+<div class="illustration-container">
+        
+    <div>
+        {{ photo.description }} 
+        
+        <button onclick="update({{photo.id}});"  class="btn btn-secondary" >update</button> 
+        
+    </div>
+    <div>
+        <img src=" {{ url_for('static', filename=filename ) }} " alt="" class="illustration">
+    </div>
+    <button class="btn btn-secondary" onclick="delete_photo({{photo.id}}, {{album.id}});">delete</button>
+</div>    
+
+{% endblock %}
+{% block script %}
+{{ super() }}
+<script src=" {{ url_for('static', filename='js/script_ph.js') }} ">
+</script>
+{% endblock %}

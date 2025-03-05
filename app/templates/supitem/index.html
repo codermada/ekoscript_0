@@ -1,0 +1,57 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - supitem       
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %} 
+{% endblock %}
+{% block content %}
+<div>
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+    <a href="javascript:void(0)" onclick="document.getElementById('light_si').style.display='block';document.getElementById('faded_si').style.display='block';" class="story-link">create a supitem</a>
+</div>
+
+    
+<div class="light" id="light_si">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_si').style.display='none';document.getElementById('faded_si').style.display='none';" class="story-link close">&times;</a>
+    <h2>Create a supitem</h2>   
+    <div>{{ render_form(form, button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_si" onclick="document.getElementById('light_si').style.display='none';document.getElementById('faded_si').style.display='none';" class="story-link close">
+    
+</div>
+
+
+<div>
+    <div>
+        Supitems
+        <ul>
+            {% for supitem in supitems %}
+                <li>
+                    {{ render_link('supitem.supitem_', supitem.name, id=supitem.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

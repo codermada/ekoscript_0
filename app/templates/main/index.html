@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+            
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+    
+{% endblock %}
+{% block content %}
+
+<div>
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+    <a href="javascript:void(0)" onclick="document.getElementById('light_main').style.display='block';document.getElementById('faded_main').style.display='block';" class="story-link">create a story</a>
+</div>
+
+<div class="light" id="light_main">
+    
+    <a href="javascript:void(0)" onclick="document.getElementById('light_main').style.display='none';document.getElementById('faded_main').style.display='none';" class="story-link close">&times;</a>
+    <h1>Create a story</h1>
+        
+    <div>{{ render_form(form,  button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_main" onclick="document.getElementById('light_main').style.display='none';document.getElementById('faded_main').style.display='none';" class="story-link close">
+    
+</div>
+
+
+    
+<div class="base">
+    <div>
+        
+        <ul>
+            {% for story in stories %}
+                <li>
+                    {{ render_link('main.story', story.title, id=story.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}
+

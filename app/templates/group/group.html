@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - group
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="groups">
+        Groups
+        <ul>
+            {% for group in groups %}
+                <li>
+                    {{ render_link('group.group_', group.name, id=group.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="group-container">
+
+    <div>
+        <h2 >
+            {{ group.name }}
+            
+        </h2>
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteGroup({{group.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+    
+        </div>
+        {% if entered_supgroups %}
+        <div>
+            Sup : 
+            {% for supgroup in group.supgroups.all() %}
+                {{ render_link('supgroup.supgroup_', supgroup.name, id=supgroup.id, class='story-link') }}
+            {% endfor %}  
+            <br>
+        </div>
+        {% endif %}
+        {% if n_members > 0 %}
+        <div>
+            Members: 
+            {% for character in group.characters.all() %}
+            
+                {{ render_link('character.character_', character.name, id=character.id, class='story-link') }}
+            {% endfor %}  
+        <br>
+        </div>
+        {% endif %}
+        <div class="light" id="light_g" >
+            <a href="javascript:void(0)" onclick="document.getElementById('light_g').style.display='none';document.getElementById('faded_g').style.display='none';" class="story-link close">&times;</a>
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+        </div>
+        <div class="faded" id="faded_g" onclick="document.getElementById('light_g').style.display='none';document.getElementById('faded_g').style.display='none';" >
+
+        </div>
+        
+        <div>
+            <div id="description_"> 
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                {{ group.description}}    
+            </div>
+        </div>
+    </div>
+    <div id="group-supgroups">
+        {{ render_link('supgroup.index', 'supgroups', id=story.id, class='story-link') }}
+        <div>
+            <ul>
+                {% for supgroup in supgroups %}
+                    <li>
+                        {{ render_link('supgroup.supgroup_', supgroup.name, id=supgroup.id, class='story-link') }} <br>
+                        {% if supgroup in group.supgroups.all() %}
+                            <button onclick="exclude({{group.id}}, {{supgroup.id}})" class="btn btn-secondary">exclude</button> 
+                        {% else %}
+                            <button onclick="include({{group.id}}, {{supgroup.id}})" class="btn btn-secondary">include</button>
+                        {% endif %}
+                        
+                         
+                    </li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_g.js') }} ">
+    </script>
+{% endblock %}

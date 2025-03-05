@@ -1,0 +1,59 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - character       
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}  
+{% endblock %}
+{% block content %}
+<div>
+	<div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+    <a href="javascript:void(0)" onclick="document.getElementById('light_character').style.display='block';document.getElementById('faded_character').style.display='block';" class="story-link">create a character</a>
+</div>
+
+<div class="light" id="light_character">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_character').style.display='none';document.getElementById('faded_character').style.display='none';" class="story-link close">&times;</a>
+    <h2>Create a character</h2>
+        
+    <div>{{ render_form(form, button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_character" onclick="document.getElementById('light_character').style.display='none';document.getElementById('faded_character').style.display='none';" class="story-link close">
+    
+</div>
+    
+    
+
+
+<div>
+    <div>
+        Characters
+        <ul>
+            {% for character in characters %}
+                <li>
+                    {{ render_link('character.character_', character.name, id=character.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

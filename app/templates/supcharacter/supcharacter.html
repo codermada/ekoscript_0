@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - supcharacter
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="supcharacters">
+        Supcharacters
+        <ul>
+            {% for supcharacter in supcharacters %}
+                <li>
+                    {{ render_link('supcharacter.supcharacter_', supcharacter.name, id=supcharacter.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="supcharacter-container">
+
+    <div>
+        <h2 >
+            {{ supcharacter.name }}
+            
+        </h2>
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteSupcharacter({{supcharacter.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+    
+        </div>
+        <div>
+            {{ render_link('character.index', 'characters', id=story.id, class='story-link') }}
+        </div>
+        {% if n_characters > 0 %}
+        <div>
+            Characters:
+            {% for character in supcharacter.characters.all() %}
+            
+                {{ render_link('character.character_', character.name, id=character.id, class='story-link') }}
+            {% endfor %}  
+        <br>
+        </div>
+        {% endif %}
+       
+        <div class="light" id="light_sc" >
+            <a href="javascript:void(0)" onclick="document.getElementById('light_sc').style.display='none';document.getElementById('faded_sc').style.display='none';" class="story-link close">&times;</a>
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+        </div>
+        <div class="faded" id="faded_sc" onclick="document.getElementById('light_sc').style.display='none';document.getElementById('faded_sc').style.display='none';" >
+
+        </div>
+        <div id="d2">
+            <div id="title_">
+                
+                
+            </div>
+            
+    
+        
+            <div id="description_">
+                
+                
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                {{ supcharacter.description}}   
+                
+                
+             
+            
+                    
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_sc.js') }} ">
+    </script>
+{% endblock %}

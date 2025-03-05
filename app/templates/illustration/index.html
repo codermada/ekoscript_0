@@ -1,0 +1,61 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - illustration   
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1>
+        {{ render_link('character.character_', character.name, id=character.id, class='story-link') }} 
+    </h1>
+    <ul class="nav">
+        {{ render_nav_item('illustration.index', 'illustrations', id=character.id) }}
+    </ul>
+
+    <div>
+        <div>
+            {{ render_messages(get_flashed_messages(with_categories=True)) }}
+        </div>
+        <a href="javascript:void(0)" onclick="document.getElementById('light_il').style.display='block';document.getElementById('faded_il').style.display='block';" class="story-link">add an illustration</a>
+    </div>
+    
+    <div class="light" id="light_il">
+        <a href="javascript:void(0)" onclick="document.getElementById('light_il').style.display='none';document.getElementById('faded_il').style.display='none';" class="story-link close">&times;</a>
+        <h2>Add illustration</h2>
+            
+        <div>{{ render_form(uForm, button_style='secondary') }}</div>
+    </div>
+    <div class="faded" id="faded_il" onclick="document.getElementById('light_il').style.display='none';document.getElementById('faded_il').style.display='none';" class="story-link close">
+        
+    </div>
+
+
+</div>
+<div class="illustrations">
+    {% for filename in filenames  %}
+        <div>
+            <a href="{{ url_for('illustration.illustration_', id=filename[0]) }} ">
+                <img src=" {{ url_for('static', filename=filename[1] ) }} " alt="" class="illustration-item">
+            </a>
+        </div>
+    {% endfor %}
+    
+    
+    
+</div> 
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

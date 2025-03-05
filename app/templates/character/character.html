@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - character
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+               
+    
+<div class="left">
+    
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>
+        
+    
+    <div id="characters">
+        Characters
+        <ul>
+            {% for character in characters %}
+                <li>
+                    {{ render_link('character.character_', character.name, id=character.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        <div>
+            {{ render_pagination(pagination) }}
+        </div>
+    </div>
+</div>
+    
+<div id="character-container">
+    <div>
+        <h2 >
+            {{ character.name }}
+            
+        </h2>
+
+        <div id="del-upd">
+            <button class="btn btn-secondary" id="delete" onclick="deleteCharacter({{character.id}}, {{story.id}})">delete</button>
+            <button class="btn btn-secondary" id="update">update</button>
+    
+        </div> 
+        <ul class="nav">
+            {{ render_nav_item('illustration.index', 'illustrations', id=character.id) }}
+        </ul>
+        <div>
+            {% if into_supcharacters %}
+            Among:<br>
+            {% for supcharacter in character.supcharacters.all() %}
+                {{ render_link('supcharacter.supcharacter_', supcharacter.name, id=supcharacter.id, class='story-link') }}
+            {% endfor %}  
+            <br>
+            {% endif %}
+        </div> 
+        <div>
+            {% if entered_groups %}
+            Member of:<br>
+            {% for group in character.groups.all() %}
+                {{ render_link('group.group_', group.name, id=group.id, class='story-link') }}
+            {% endfor %}  
+            <br>
+            {% endif %}
+        </div> 
+       
+        <div class="light" id="light_character">
+            <a href="javascript:void(0)" onclick="document.getElementById('light_character').style.display='none';document.getElementById('faded_character').style.display='none';" class="story-link close">&times;</a>
+            <div id="f">
+            {{ render_form(uForm, button_style='secondary') }}
+            {{ render_form(form, button_style='secondary') }}
+            </div>
+        </div>
+        <div class="faded" id="faded_character"  onclick="document.getElementById('light_character').style.display='none';document.getElementById('faded_character').style.display='none';">
+
+        </div>
+            
+        
+        <div id="d2">
+            
+            <div id="description_">
+                
+                
+                <img id="cover" src=" {{ url_for('static', filename=filename) }} " alt="cover">
+                
+                
+
+                
+                {{ character.description}}
+            </div>
+        </div>
+    </div>
+    <div id="character-groups">
+        Supcharacters
+        <div>
+            <ul>
+                {% for supcharacter in supcharacters %}
+                    <li>
+                        {{ render_link('supcharacter.supcharacter_', supcharacter.name, id=supcharacter.id, class='story-link') }} <br>
+                        {% if supcharacter in character.supcharacters.all() %}
+                            <button onclick="exclude2({{character.id}}, {{supcharacter.id}})">exclude</button> 
+                        {% else %}
+                            <button onclick="include2({{character.id}}, {{supcharacter.id}})">include</button>
+                        {% endif %}
+                        
+                         
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        Groups
+        <div>
+            <ul>
+                {% for group in groups %}
+                    <li>
+                        {{ render_link('group.group_', group.name, id=group.id, class='story-link') }} <br>
+                        {% if group in character.groups.all() %}
+                            <button onclick="exclude({{character.id}}, {{group.id}})">exclude</button> 
+                        {% else %}
+                            <button onclick="include({{character.id}}, {{group.id}})">include</button>
+                        {% endif %}
+                        
+                         
+                    </li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src=" {{ url_for('static', filename='js/script_cr.js') }} ">
+    </script>
+{% endblock %}

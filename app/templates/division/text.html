@@ -1,0 +1,75 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - text      
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+<div class="left">
+
+    <h2>
+        {{ render_link('chapter.chapter_', chapter.title, id=chapter.id, class='story-link') }}
+    </h2>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('chapter.text', 'text', id=chapter.id)}}
+            {{render_nav_item('panel.index', 'panels', id=chapter.id)}}
+        </ul>
+    </div>
+
+    <h3>
+        {{ render_link('panel.panel_', panel.title, id=panel.id, class='story-link') }}
+        
+    </h3>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('division.index', 'divisions', id=panel.id)}}
+        </ul>
+    </div>
+    
+    
+    <h4>
+        {{render_link('division.division_', division.title, id=division.id, class='story-link')}} 
+    </h4>
+    <div>
+        <ul class="nav">
+            {{render_nav_item('division.text', 'text', id=division.id)}}
+        </ul>
+    </div>
+    
+</div>
+
+
+<div>
+    Text
+    <div class="lines_">
+       
+        <ul> 
+            <li>... {{ render_link('division.full_text', 'see all', id=division.id, class='story-link-see-all') }}</li>
+            {% for text in texts[-10:] %}
+
+            <li>{{text.text}}</li>
+            {% endfor %} 
+            <li></li>
+        </ul>
+        
+    </div>
+    <div>
+        {{ render_form(form, button_style='secondary') }}
+    </div>
+    
+    
+</div>
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

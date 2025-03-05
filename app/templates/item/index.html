@@ -1,0 +1,55 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - item       
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %} 
+{% endblock %}
+{% block content %}
+<div>
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div> 
+    <a href="javascript:void(0)" onclick="document.getElementById('light_i').style.display='block';document.getElementById('faded_i').style.display='block';" class="story-link">create an item</a>
+</div>
+
+<div class="light" id="light_i">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_i').style.display='none';document.getElementById('faded_i').style.display='none';" class="story-link close">&times;</a>
+    <h2>Create an item</h2>   
+    <div>{{ render_form(form, button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_i" onclick="document.getElementById('light_i').style.display='none';document.getElementById('faded_i').style.display='none';" class="story-link close">
+    
+</div>
+
+<div>
+    <div>
+        Items
+        <ul>
+            {% for item in items %}
+                <li>
+                    {{ render_link('item.item_', item.name, id=item.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

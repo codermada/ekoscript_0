@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    - album   
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %}
+{% endblock %}
+{% block content %}
+<div>
+	<div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div> 
+    <a href="javascript:void(0)" onclick="document.getElementById('light_album').style.display='block';document.getElementById('faded_album').style.display='block';" class="story-link">create a album</a>
+</div>
+
+    
+<div class="light" id="light_album">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_album').style.display='none';document.getElementById('faded_album').style.display='none';" class="story-link close">&times;</a>
+    <h2>Create an album</h2>   
+    <div>{{ render_form(form, button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_album" onclick="document.getElementById('light_album').style.display='none';document.getElementById('faded_album').style.display='none';" class="story-link close">
+    
+</div>
+
+
+<div>
+    <div>
+        Albums
+        <ul>
+            {% for album in albums %}
+                <li>
+                    {{ render_link('album.album_', album.title, id=album.id, class='story-link') }}
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

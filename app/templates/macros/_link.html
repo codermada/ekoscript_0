@@ -1,0 +1,10 @@
+{% macro render_link(endpoint, text, class=None, ID=None) %}
+    <a href=" {{ url_for(endpoint, **kwargs ) }} " 
+    {% if class != None%}
+        class = {{ class }}
+    {% endif %}
+    {% if ID != None%}
+        id = {{ ID }}
+    {% endif %}
+    >{{text}}</a>
+{% endmacro %}

@@ -1,0 +1,34 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - authentication 
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+
+{% endblock %}
+{% block content %}
+<div>
+    <img src=" {{ url_for('static', filename='images/logo.png' ) }} " id="logo">
+    <h1>Ekoscriptor</h1>
+    <div>
+    {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div>  
+    {{render_link('auth.register', 'Sign up', class='story-link')}}
+    <br>or<br>
+    {{render_link('auth.login', 'Sign in', class='story-link')}}
+</div>
+<div>
+    Welcome to Ekoscriptor, a storyboard web application, made to facilitate writing stories, comic books, manga, etc. 
+</div>
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}

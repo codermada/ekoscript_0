@@ -1,0 +1,55 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}
+    - supgroup       
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename=theme ) }} ">
+{% endblock %}
+
+{% block nav %}
+{% include 'story-nav.html'   %} 
+{% endblock %}
+{% block content %}
+<div>
+    <div>
+        {{ render_messages(get_flashed_messages(with_categories=True)) }}
+    </div> 
+    <a href="javascript:void(0)" onclick="document.getElementById('light_sg').style.display='block';document.getElementById('faded_sg').style.display='block';" class="story-link">create a supgroup</a>
+</div>
+
+<div class="light" id="light_sg">
+    <a href="javascript:void(0)" onclick="document.getElementById('light_sg').style.display='none';document.getElementById('faded_sg').style.display='none';" class="story-link close">&times;</a>
+    <h2>Create a supgroup</h2>   
+    <div>{{ render_form(form, button_style='secondary') }}</div>
+</div>
+<div class="faded" id="faded_sg" onclick="document.getElementById('light_sg').style.display='none';document.getElementById('faded_sg').style.display='none';" class="story-link close">
+    
+</div>
+
+<div>
+    <div>
+        Supgroups
+        <ul>
+            {% for supgroup in supgroups %}
+                <li>
+                    {{ render_link('supgroup.supgroup_', supgroup.name, id=supgroup.id, class='story-link') }}   
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="pagination">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
+    
+    
+
+{% endblock %}
+{% block script %}
+    
+{% endblock %}
